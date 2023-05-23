@@ -34,16 +34,23 @@ Open a command prompt and type the following commands:
 ```
 pip install pynput
 pip install plyer
+pip install fasteners
 ```
 
 Running the Script
 With the necessary packages installed, you can run the script by navigating to the directory where the script is located and running the following command:
 
+Replace serveAndProtect.py with the actual name of the script file.
 ```
 python serveAndProtect.py
 ```
 
-Replace serveAndProtect.py with the actual name of the script file.
+Alternatively you can add it as startup:
+Win+R
+Open: shell:startup
+paste the serveAndProtect.py in the opened directory
+
+The script is written in a way that would not allow multiple sessions of the same script. (**Don't worry**)
 
 Customizing the Script
 The key sequence that the script looks for is defined in the sequence list. You can change the sequence to any sequence of keys you like.
