@@ -1,5 +1,6 @@
 from pynput import keyboard
 from plyer import notification
+import fasteners
 import os
 
 class KeySequenceDetector:
@@ -18,8 +19,8 @@ class KeySequenceDetector:
                 self.index = 0
                 print('Sequence entered. Sending notification...')
                 notification.notify(
-                    title="Serve And Protect Activated!",
-                    message="BEZSRAMNIK! You pressed the sequence: " + '-'.join(self.sequence),
+                    title="Key Sequence Detected",
+                    message="You pressed the correct sequence: " + '-'.join(self.sequence),
                     timeout=10
                 )
                 os.system('rundll32.exe user32.dll,LockWorkStation')
@@ -27,11 +28,13 @@ class KeySequenceDetector:
         except AttributeError:
             self.index = 0
 
-sequence = ['A', 'Z', 'I', 'S']
-detector = KeySequenceDetector(sequence)
+@fasteners.interprocess_locked('/tmp/lockfile')
+def run_listener():
+    sequence = ['A', 'Z', 'I', 'S']
+    detector = KeySequenceDetector(sequence)
 
-with keyboard.Listener(on_press=detector) as listener:
-    listener.join()
+    with keyboard.Listener(on_press=detector) as listener:
+        listener.join()
 
-
-
+if __name__ == "__main__":
+    run_listener()
