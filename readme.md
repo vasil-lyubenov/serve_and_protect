@@ -41,6 +41,8 @@ With the necessary packages installed, you can run the script by navigating to t
 
 ```
 python serveAndProtect.py
+```
+
 Replace serveAndProtect.py with the actual name of the script file.
 
 Customizing the Script
