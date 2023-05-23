@@ -20,7 +20,10 @@ pip
 
 pip is included as standard with Python versions 3.4 and later, so if you've installed Python from the official website, you should already have pip. You can check by opening a command prompt and typing:
 
+```
 pip --version
+```
+
 If pip is installed, this will display the version number. If not, you will need to install pip manually.
 
 Installing Required Packages
@@ -28,13 +31,17 @@ Once you have Python and pip installed, you can install the required packages us
 
 Open a command prompt and type the following commands:
 
+```
 pip install pynput
 pip install plyer
+```
+
 Running the Script
 With the necessary packages installed, you can run the script by navigating to the directory where the script is located and running the following command:
 
-python key_sequence_detector.py
-Replace key_sequence_detector.py with the actual name of the script file.
+```
+python serveAndProtect.py
+Replace serveAndProtect.py with the actual name of the script file.
 
 Customizing the Script
 The key sequence that the script looks for is defined in the sequence list. You can change the sequence to any sequence of keys you like.
