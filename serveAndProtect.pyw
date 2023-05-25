@@ -1,7 +1,8 @@
+import configparser
+import os
+import yagmail
 from pynput import keyboard
 from plyer import notification
-import fasteners
-import os
 
 class KeySequenceDetector:
     def __init__(self, sequence):
@@ -25,16 +26,36 @@ class KeySequenceDetector:
                 )
                 os.system('rundll32.exe user32.dll,LockWorkStation')
 
+                # Send email notification
+                send_email_notification()
+
         except AttributeError:
             self.index = 0
 
-@fasteners.interprocess_locked('/tmp/lockfile')
-def run_listener():
-    sequence = ['A', 'Z', 'I', 'S']
-    detector = KeySequenceDetector(sequence)
 
-    with keyboard.Listener(on_press=detector) as listener:
-        listener.join()
+def send_email_notification():
+    config = configparser.ConfigParser()
+    config.read('config.ini')
 
-if __name__ == "__main__":
-    run_listener()
+    # Check if EMAIL and GMAIL sections exist in the config file
+    if 'EMAIL' in config and 'GMAIL' in config:
+        email_address = config['EMAIL']['address']
+        gmail_address = config['GMAIL']['address']
+        gmail_password = config['GMAIL']['password']
+
+        # Sending email
+        yag = yagmail.SMTP(gmail_address, gmail_password)
+        yag.send(
+            to=email_address,
+            subject="Banned Key Sequence Detected!",
+            contents="You pressed the following banned sequence: " + '-'.join(sequence),
+        )
+    else:
+        print('Required sections or fields are missing in config.ini')
+
+
+sequence = ['A', 'Z', 'I', 'S']
+detector = KeySequenceDetector(sequence)
+
+with keyboard.Listener(on_press=detector) as listener:
+    listener.join()
