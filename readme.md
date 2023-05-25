@@ -45,6 +45,19 @@ Replace serveAndProtect.py with the actual name of the script file.
 python serveAndProtect.py
 ```
 
+Additionaly in the config.ini file you can add credentials for your gmail and password(have to be using 2-factor auth and use the device to use it), and have to select to which email to be sent(doesn't need to be gmail one)
+
+config.ini:
+
+```
+[EMAIL]
+address = email_to_send_to@mail.com
+
+[GMAIL]
+address = gmail_to_be_sent_from@gmail.com
+password = gmailpass
+```
+
 Alternatively you can add it as startup:
 Win+R
 Open: shell:startup
